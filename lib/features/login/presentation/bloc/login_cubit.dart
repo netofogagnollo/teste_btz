@@ -1,5 +1,6 @@
 import 'package:btz/core/base_cubit.dart';
 import 'package:btz/core/entity/login_entity.dart';
+import 'package:btz/features/login/domain/usecases/add_mock_usecase.dart';
 import 'package:btz/features/login/domain/usecases/send_login_usecase.dart';
 import 'package:btz/injection_container.dart';
 import 'package:equatable/equatable.dart';
@@ -10,12 +11,14 @@ part 'login_state.dart';
 LoginCubit createLoginCubit() {
   return LoginCubit(
     sl(),
+    sl(),
   );
 }
 
 class LoginCubit extends BaseCubit<LoginState> {
   final SendLoginUsecase sendLoginUsecase;
-  LoginCubit(this.sendLoginUsecase) : super(const LoginState());
+  final AddMockUsecase addMockUsecase;
+  LoginCubit(this.sendLoginUsecase, this.addMockUsecase) : super(const LoginState());
 
   void init() {
     e(state.copyWith(status: () => Status.initial));
@@ -23,6 +26,10 @@ class LoginCubit extends BaseCubit<LoginState> {
 
   void setLogin(LoginEntity login) {
     e(state.copyWith(login: login));
+  }
+
+  void addMock() async {
+    await addMockUsecase();
   }
 
   void loading() async {

@@ -25,6 +25,8 @@ import 'package:btz/features/login/data/datasource/local_datasource.dart'
     as _i721;
 import 'package:btz/features/login/data/repositories/login_repositories.dart'
     as _i192;
+import 'package:btz/features/login/domain/usecases/add_mock_usecase.dart'
+    as _i663;
 import 'package:btz/features/login/domain/usecases/send_login_usecase.dart'
     as _i514;
 import 'package:get_it/get_it.dart' as _i174;
@@ -50,6 +52,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i721.LocalDatasource(gh<_i377.DatabaseAdapter>()));
     gh.lazySingleton<_i514.SendLoginUsecase>(
         () => _i514.SendLoginUsecase(gh<_i192.LoginRepositories>()));
+    gh.lazySingleton<_i663.AddMockUsecase>(
+        () => _i663.AddMockUsecase(gh<_i192.LoginRepositories>()));
     gh.lazySingleton<_i962.HomeRepositories>(
         () => _i962.HomeRepositories(gh<_i411.LocalDatasource>()));
     gh.lazySingleton<_i192.LoginRepositories>(

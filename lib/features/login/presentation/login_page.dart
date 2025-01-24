@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final _pass = TextEditingController();
   bool mostrarSenha = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  bool first = true;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -29,7 +29,11 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, state) {
             var cubit = context.read<LoginCubit>();
+            if (first) {
+              cubit.addMock();
+            }
             return Scaffold(
+              backgroundColor: Colors.white,
               body: Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
@@ -46,8 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                       validator: Validatorless.multiple(
                         [
                           Validatorless.required('Por favor, digite seu email'),
-                          Validatorless.email(
-                              'Por favor, digite um e-mail correto')
+                          Validatorless.email('Por favor, digite um e-mail correto')
                         ],
                       ),
                     ),
@@ -62,14 +65,13 @@ class _LoginPageState extends State<LoginPage> {
                             mostrarSenha = !mostrarSenha;
                           });
                         },
-                        icon: Icon(mostrarSenha
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off),
+                        icon: Icon(mostrarSenha ? Icons.visibility_outlined : Icons.visibility_off),
                       ),
                     ),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          first = false;
                           await showDialog(
                               context: context,
                               builder: (ctx) => const AnimationAlert(
@@ -81,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (context.mounted) {
                             cubit.sendLoginUsecase(LoginEntity(
                                 email: _email.text,
-                                name: 'darci',
+                                name: '',
                                 lastLogin: DateTime.now(),
                                 userId: 1,
                                 token: 'FESU-FIHASEF78YA-S78SEHT780-HG8AH'));

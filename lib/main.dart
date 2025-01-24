@@ -5,8 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'injection_container.dart' as injection_container;
 
 GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-final GlobalKey<ScaffoldMessengerState> snackbarKey =
-    GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> snackbarKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   runApp(const SplashWrapper());
 }
@@ -31,8 +30,7 @@ class _SplashWrapperState extends State<SplashWrapper> {
   Future<void> _loadResources() async {
     // Simula o carregamento inicial (exemplo: carregar configs, etc)
     WidgetsFlutterBinding.ensureInitialized();
-    await injection_container
-        .init(); // Chama o método de inicialização do GetIt
+    await injection_container.init(); // Chama o método de inicialização do GetIt
     await Future.delayed(const Duration(seconds: 3));
     setState(() {
       _isLoading = false;
@@ -41,9 +39,7 @@ class _SplashWrapperState extends State<SplashWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? const SplashScreen()
-        : MainApp(injection_container.sl());
+    return _isLoading ? const SplashScreen() : MainApp(injection_container.sl());
   }
 }
 
@@ -57,6 +53,7 @@ class SplashScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: themeDefault,
       home: const Scaffold(
+        backgroundColor: Colors.white,
         body: Center(child: Image(image: AssetImage('assets/logo.png'))),
       ),
     );
@@ -77,8 +74,7 @@ class MainApp extends StatelessWidget {
       scaffoldMessengerKey: snackbarKey,
       routerDelegate: routerDelegate,
       routeInformationParser: BeamerParser(),
-      backButtonDispatcher:
-          BeamerBackButtonDispatcher(delegate: routerDelegate),
+      backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
       supportedLocales: const [
         Locale('en', 'US'), // English United States
         Locale('pt', 'BR'), // Portuguese Brazil

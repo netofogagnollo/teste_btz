@@ -10,4 +10,8 @@ class LoginRepositories {
   Future<void> setLogin(LoginEntity login) async {
     await localDatasource.setLogin(login);
   }
+
+  Future<void> addEquipamento() async {
+    await localDatasource.addEquipamento();
+  }
 }
